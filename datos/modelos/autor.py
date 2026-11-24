@@ -1,20 +1,16 @@
+from peewee import Model, AutoField, CharField, IntegerField, DateField, BooleanField
 from datos.conexion import base_datos
-from peewee import Model, AutoField, CharField, IntegerField, DateField, TextField
 
-database = base_datos()
 
-class BaseModel(Model):
-    class Meta:
-        database = database
-
-class Autor(BaseModel):
-    id_autor = AutoField()
-    nombre = CharField(max_length=50,null=True)
-    pseudonimo = CharField(max_length=50,null=True)
-    nacionalidad = IntegerField(index=True,null=True)
+class Autor(Model):
+    id_autor = AutoField(primary_key=True)
+    pais = IntegerField(column_name='pais', index=True, null=True)
+    nombre = CharField(max_length=100, null=True)
+    pseudonimo = CharField(max_length=25, null=True)
     fecha_nacimiento = DateField(null=True)
     fecha_defuncion = DateField(null=True)
-    biografia = TextField(null=True)
+    habilitado = BooleanField(default=True)
 
     class Meta:
+        database = base_datos
         table_name = 'autores'
